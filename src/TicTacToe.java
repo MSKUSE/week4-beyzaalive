@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * A simple Tic-Tac-Toe game implementation in Java.
  */
@@ -9,23 +11,40 @@ public class TicTacToe {
 	 * @param args Command line arguments (not used).
 	 */
 	public static void main(String[] args) {
-		// TODO: Initialize the game board and scanner
+		Scanner reader = new Scanner(System.in);
 		char[][] board ={
-				{' ',' ',' '},
-				{' ',' ',' '},
-				{' ',' ',' '}
 
-
-		};
+							{' ',' ',' '},
+							{' ','X',' '},
+							{' ',' ',' '}
+						};
 		printBoard(board);
-		// TODO: Print the initial game board
-		// TODO: Prompt the current player for their move
-		// TODO: Update the board with the player's move
-		// TODO: Handle invalid move
+		int validMoves = 0;
+		boolean gameEnded = false;
+		int player = 0;
+		while(!gameEnded){
+
+			System.out.println("Player" + (player +1) +
+					" enter a row number: " );
+			int row = reader.nextInt();
+			System.out.println("Player" + (player +1) +
+					" enter a col number: " );
+			int col = reader.nextInt();
+			if (isValid(row, col) && board[row][col] == ' '){
+				board[row-1][col-1] = player == 0 ? 'X' : 'O' ;
+				printBoard(board);
+				player = ++player % 2;
+				validMoves++;
+			}else {
+				System.out.println("Please provide valid input!!!");
+			}
+			gameEnded = validMoves == 9 || checkboard(board, row-1, col-1);
+		}
+
+
 		// TODO: Check if the game has ended
+
 	}
-
-
 
 
 	/**
@@ -37,7 +56,54 @@ public class TicTacToe {
 	 * @return True if the current player has won, false otherwise.
 	 */
 	public static boolean checkboard(char[][] board, int row, int col) {
-		// TODO: Implement the logic to check if the current player has won
+		char symbol = board[row][col];
+		boolean win = true;
+
+		//For row
+		for (int i = 0; i < 3; i++){
+			if(board[row][i] != symbol){
+				win = false;
+				break;
+			}
+		}
+		if (win){
+			return true;
+		}
+
+
+		//For col
+		for (int i = 0; i < 3; i++) {
+			if(board[i][col] != symbol){
+				win = false;
+				break;
+			}
+		}
+		if(win){
+			return true;
+		}
+		if(row == col){
+			win = true;
+			for (int i = 0; i < 3; i++) {
+				if(board[i][i] != symbol){
+					win = false;
+					break;
+				}
+			}
+			if(win) {
+				return true;
+			}
+		}if(row+col==2){
+			win=true;
+			for(int i=0; i<3;i++){
+				if(board[2-i][i]!=symbol){
+					win=false;
+				}
+			}
+			if(win){
+				return true;
+			}
+		}
+		
 		return false;
 	}
 
@@ -48,7 +114,7 @@ public class TicTacToe {
 	 */
 	public static void printBoard(char[][] board) {
 		System.out.println("    1    2    3");
-		System.out.println("    -------------");
+		System.out.println("	-------------");
 		for (int row=0; row< 3; row++){
 			System.out.println(row+1 + " ");
 			for(int col=0; col<3;col++){
@@ -59,7 +125,7 @@ public class TicTacToe {
 				}
 			}
 			System.out.println();
-			System.out.println("    ------------------");
+			System.out.println("------------------");
 		}
 		// TODO: Implement the logic to print the game board
 	}
