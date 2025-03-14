@@ -1,5 +1,3 @@
-
-
 /**
  * A simple Tic-Tac-Toe game implementation in Java.
  */
@@ -12,6 +10,14 @@ public class TicTacToe {
 	 */
 	public static void main(String[] args) {
 		// TODO: Initialize the game board and scanner
+		char[][] board ={
+				{' ',' ',' '},
+				{' ',' ',' '},
+				{' ',' ',' '}
+
+
+		};
+		printBoard(board);
 		// TODO: Print the initial game board
 		// TODO: Prompt the current player for their move
 		// TODO: Update the board with the player's move
@@ -32,8 +38,8 @@ public class TicTacToe {
 	 */
 	public static boolean checkboard(char[][] board, int row, int col) {
 		// TODO: Implement the logic to check if the current player has won
-        return false;
-    }
+		return false;
+	}
 
 	/**
 	 * Prints the current state of the game board.
@@ -41,6 +47,20 @@ public class TicTacToe {
 	 * @param board The game board.
 	 */
 	public static void printBoard(char[][] board) {
+		System.out.println("    1    2    3");
+		System.out.println("    -------------");
+		for (int row=0; row< 3; row++){
+			System.out.println(row+1 + " ");
+			for(int col=0; col<3;col++){
+				System.out.print(" |");
+				System.out.print(" "+ board[row][col] + " ");
+				if(col==2){
+					System.out.println(" |");
+				}
+			}
+			System.out.println();
+			System.out.println("    ------------------");
+		}
 		// TODO: Implement the logic to print the game board
 	}
 
@@ -52,7 +72,12 @@ public class TicTacToe {
 	 * @return True if the row and column are valid, false otherwise.
 	 */
 	public static boolean isValid(int row, int col) {
-		// TODO: Implement the logic to validate the row and column
-		return false;
+		if(row<1 || row>3){
+			return false;
+		}
+		if(col<1 || col>3){
+			return  false;
+		}
+		return true;
 	}
 }
